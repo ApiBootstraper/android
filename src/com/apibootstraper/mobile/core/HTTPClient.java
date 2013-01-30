@@ -2,11 +2,47 @@ package com.apibootstraper.mobile.core;
 
 import com.loopj.android.http.*;
 
-public class HTTPClient {
+public final class HTTPClient extends AsyncHttpClient {
 
-	private static final String BASE_URL = "http://api.twitter.com/1/";
+	private static final String API_BASE_URL = "http://api.apibootstraper.com/";
+	private static final String API_VERSION  = "1.0";
 
-	private static AsyncHttpClient client = new AsyncHttpClient();
+	private static final String APP_ID  = "APP_ID";
+	private static final String APP_KEY = "APP_KEY";
+
+	private static volatile HTTPClient instance = null;
+
+
+	/**
+	 * 
+	 * @return a shared HTTPClient
+	 */
+	public final static HTTPClient getInstance() {
+
+        if (HTTPClient.instance == null) {
+           synchronized(HTTPClient.class) {
+             if (HTTPClient.instance == null) {
+            	 HTTPClient.instance = new HTTPClient();
+             }
+           }
+        }
+        return HTTPClient.instance;
+    }
+
+	/**
+	 * 
+	 */
+	private HTTPClient() {
+		super();
+
+		// Default headers
+		addHeader("X-Api-Version", API_VERSION);
+		addHeader("X-APP_ID", APP_ID);
+		addHeader("X-APP_KEY", APP_KEY);
+
+		addHeader("Accept", "application/json");
+	}
+
 
 	/**
 	 * Call a REST GET webservice
@@ -15,8 +51,8 @@ public class HTTPClient {
 	 * @param params
 	 * @param responseHandler
 	 */
-	public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		client.get(getAbsoluteUrl(url), params, responseHandler);
+	public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+		HTTPClient.getInstance().get(getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -26,8 +62,8 @@ public class HTTPClient {
 	 * @param params
 	 * @param responseHandler
 	 */
-	public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		client.post(getAbsoluteUrl(url), params, responseHandler);
+	public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+		HTTPClient.getInstance().post(getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -37,8 +73,8 @@ public class HTTPClient {
 	 * @param params
 	 * @param responseHandler
 	 */
-	public static void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-		client.put(getAbsoluteUrl(url), params, responseHandler);
+	public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+		HTTPClient.getInstance().put(getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -47,15 +83,15 @@ public class HTTPClient {
 	 * @param url
 	 * @param responseHandler
 	 */
-	public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
-		client.delete(getAbsoluteUrl(url), responseHandler);
+	public void delete(String url, AsyncHttpResponseHandler responseHandler) {
+		HTTPClient.getInstance().delete(getAbsoluteUrl(url), responseHandler);
 	}
 
 	/**
 	 * @param relativeUrl
 	 * @return the absolute url
 	 */
-	private static String getAbsoluteUrl(String relativeUrl) {
-		return BASE_URL + relativeUrl;
+	private String getAbsoluteUrl(String relativeUrl) {
+		return API_BASE_URL + relativeUrl;
 	}
 }

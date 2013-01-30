@@ -77,7 +77,7 @@ public class User implements Serializable {
 	 * @param responseHandler
 	 */
 	public static void findByUUID(String uuid, AsyncHttpResponseHandler responseHandler) {
-		HTTPClient.get("user/" + uuid, null, new JsonHttpResponseHandler() {
+		HTTPClient.getInstance().get("user/" + uuid, null, new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray timeline) {

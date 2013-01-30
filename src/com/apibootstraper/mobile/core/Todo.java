@@ -95,7 +95,7 @@ public class Todo implements Serializable {
 	 * @param responseHandler
 	 */
 	public static void findAll(AsyncHttpResponseHandler responseHandler) {
-		HTTPClient.get("todo", null, new JsonHttpResponseHandler() {
+		HTTPClient.getInstance().get("todo", null, new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray timeline) {
@@ -119,7 +119,7 @@ public class Todo implements Serializable {
 	 * @param responseHandler
 	 */
 	public static void findByUUID(String uuid, AsyncHttpResponseHandler responseHandler) {
-		HTTPClient.get("todo/" + uuid, null, new JsonHttpResponseHandler() {
+		HTTPClient.getInstance().get("todo/" + uuid, null, new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray timeline) {
