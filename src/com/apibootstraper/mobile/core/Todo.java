@@ -1,4 +1,4 @@
-package com.apibootstraper.todo.core;
+package com.apibootstraper.mobile.core;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.apibootstraper.todo.core.util.DateUtils;
+import com.apibootstraper.mobile.core.util.DateUtils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -87,15 +87,38 @@ public class Todo implements Serializable {
 		this.user = user;
 		return this;
 	}
-	
+
 	/**
-	 * Call a REST GET webservice
+	 * Find all todo
 	 * 
 	 * @param uuid
-	 * @param params
 	 * @param responseHandler
 	 */
-	public static void get(String uuid, AsyncHttpResponseHandler responseHandler) {
+	public static void findAll(AsyncHttpResponseHandler responseHandler) {
+		HTTPClient.get("todo", null, new JsonHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(JSONArray timeline) {
+				try {
+					JSONObject firstEvent = (JSONObject)timeline.get(0);
+					String tweetText = firstEvent.getString("text");
+
+					// Do something with the response
+					System.out.println(tweetText);
+				} catch(JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Find a todo by UUID
+	 * 
+	 * @param uuid
+	 * @param responseHandler
+	 */
+	public static void findByUUID(String uuid, AsyncHttpResponseHandler responseHandler) {
 		HTTPClient.get("todo/" + uuid, null, new JsonHttpResponseHandler() {
 
 			@Override

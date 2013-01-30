@@ -1,4 +1,4 @@
-package com.apibootstraper.todo.core;
+package com.apibootstraper.mobile.core;
 
 import com.loopj.android.http.*;
 

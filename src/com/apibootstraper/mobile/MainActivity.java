@@ -1,9 +1,7 @@
-package com.apibootstraper.todo;
+package com.apibootstraper.mobile;
 
-import java.util.ArrayList;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
