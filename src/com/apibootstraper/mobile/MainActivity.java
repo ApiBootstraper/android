@@ -2,13 +2,19 @@ package com.apibootstraper.mobile;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.apibootstraper.mobile.core.User;
+import com.apibootstraper.mobile.core.util.HTTPResponse;
+
 public class MainActivity extends Activity
 {
-	private ListView listView;
+    private TodoApplication application;
+
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -16,10 +22,33 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        application = (TodoApplication)getApplication();
+
         listView = (ListView)findViewById(R.id.todoListView);
         String[] listeStrings = {"My first application","Update my application"};
 
         listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeStrings));
+
+        // Try to call WS
+        application.showProgressDialog(this);
+        User.findByUUID("teste", new HTTPResponse<User>() {
+
+            @Override
+            public void onSuccess(User user) {
+                Log.d("WS_CALL", user.toString());
+            }
+            
+            @Override
+            public void onFailure(Throwable error, String content) {
+                Log.d("WS_CALL", error.getMessage());
+                Log.d("WS_CALL", content);
+            }
+            
+            @Override
+            public void onFinish() {
+                application.hideProgressDialog();
+            }
+        });
     }
 
     @Override
@@ -29,5 +58,5 @@ public class MainActivity extends Activity
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-    
+
 }
