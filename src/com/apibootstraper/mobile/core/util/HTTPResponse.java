@@ -1,6 +1,6 @@
 package com.apibootstraper.mobile.core.util;
 
-public class HTTPResponse<SuccessT> {
+public class HTTPResponse<T> {
 
     /**
      * Fired when the request is started, override to handle in your own code
@@ -16,14 +16,14 @@ public class HTTPResponse<SuccessT> {
      * 
      * @param response
      */
-    public void onSuccess(SuccessT object) {}
+    public void onSuccess(T object) {}
 
     /**
      * 
      * @param statusCode
      * @param object
      */
-    public void onSuccess(int statusCode, SuccessT object) {
+    public void onSuccess(int statusCode, T object) {
         onSuccess(object);
     }
 

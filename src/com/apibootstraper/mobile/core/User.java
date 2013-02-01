@@ -6,6 +6,7 @@ import java.util.Date;
 import org.json.JSONArray;
 
 import com.apibootstraper.mobile.core.util.DateUtils;
+import com.apibootstraper.mobile.core.util.GsonHttpResponseHandler;
 import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -78,10 +79,11 @@ public class User implements Serializable {
      * @param responseHandler
      */
     public static void findByUUID(String uuid, final HTTPResponse<User> response) {
-        HTTPClient.getInstance().get("user/" + uuid, null, new JsonHttpResponseHandler() {
+
+        onStart handler = new GsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(JSONArray timeline) {
+            public void onSuccess(String content) {
                 try {
                     User user = new User();
 
@@ -92,7 +94,9 @@ public class User implements Serializable {
                     response.onFailure(e, null);
                 }
             }
-        });
+        };
+
+        HTTPClient.getInstance().get("user/" + uuid, null, handler);
     }
 
     /**
@@ -104,10 +108,11 @@ public class User implements Serializable {
      * @param response
      */
     public static void userAvailability(String username, final HTTPResponse<Boolean> response) {
-        HTTPClient.getInstance().get("user/availability?=" + username, null, new JsonHttpResponseHandler() {
+
+        onStart handler = new GsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(JSONArray timeline) {
+            public void onSuccess(String content) {
                 try {
                     boolean res = true;
 
@@ -118,17 +123,8 @@ public class User implements Serializable {
                     response.onFailure(e, null);
                 }
             }
+        };
 
-            @Override
-            public void onFailure(Throwable e, String c) {
-                // TODO automatically pass the JsonHttpResponseHandler onFailure into HTTPResponse if not Override
-                response.onFailure(e, c);
-            }
-            
-            @Override
-            public void onFinish() {
-                response.onFinish();
-            }
-        });
+        HTTPClient.getInstance().get("user/availability?=" + username, null, handler);
     }
 }
