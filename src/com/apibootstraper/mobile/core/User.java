@@ -72,6 +72,8 @@ public class User implements Serializable {
     /**
      * Find a user by UUID
      * 
+     * @apiRoute /user/{uuid}
+     * 
      * @param uuid
      * @param responseHandler
      */
@@ -81,9 +83,35 @@ public class User implements Serializable {
             @Override
             public void onSuccess(JSONArray timeline) {
                 try {
-                    User user= new User();
+                    User user = new User();
 
                     response.onSuccess(user);
+                } catch(Exception e) {
+                    e.printStackTrace();
+
+                    response.onFailure(e, null);
+                }
+            }
+        });
+    }
+
+    /**
+     * Check if a username is available
+     * 
+     * @apiRoute /user/availability?username={username}
+     * 
+     * @param username
+     * @param response
+     */
+    public static void userAvailability(String username, final HTTPResponse<Boolean> response) {
+        HTTPClient.getInstance().get("user/availability?=" + username, null, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(JSONArray timeline) {
+                try {
+                    boolean res = true;
+
+                    response.onSuccess(res);
                 } catch(Exception e) {
                     e.printStackTrace();
 

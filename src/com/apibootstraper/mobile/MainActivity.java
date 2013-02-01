@@ -31,11 +31,11 @@ public class MainActivity extends Activity
 
         // Try to call WS
         application.showProgressDialog(this);
-        User.findByUUID("teste", new HTTPResponse<User>() {
+        User.userAvailability("teste", new HTTPResponse<Boolean>() {
 
             @Override
-            public void onSuccess(User user) {
-                Log.d("WS_CALL", user.toString());
+            public void onSuccess(Boolean isAvailable) {
+                Log.d("WS_CALL", isAvailable ? "YES" : "NO");
             }
             
             @Override

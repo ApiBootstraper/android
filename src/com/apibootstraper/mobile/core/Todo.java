@@ -91,6 +91,8 @@ public class Todo implements Serializable {
     /**
      * Find all todo
      * 
+     * @apiRoute /todo
+     * 
      * @param uuid
      * @param responseHandler
      */
@@ -111,8 +113,7 @@ public class Todo implements Serializable {
 
                 } catch(Exception e) {
                     e.printStackTrace();
-
-                    response.onFailure(e, null);
+                    onFailure(e);
                 }
             }
         });
@@ -120,6 +121,8 @@ public class Todo implements Serializable {
 
     /**
      * Find a todo by UUID
+     * 
+     * @apiRoute /todo/{uuid}
      * 
      * @param uuid
      * @param responseHandler
@@ -134,9 +137,7 @@ public class Todo implements Serializable {
 
                     response.onSuccess(todo);
                 } catch(Exception e) {
-                    e.printStackTrace();
-
-                    response.onFailure(e, null);
+                    onFailure(e);
                 }
             }
         });
