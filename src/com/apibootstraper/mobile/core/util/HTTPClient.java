@@ -56,7 +56,7 @@ public final class HTTPClient extends AsyncHttpClient {
      * @param responseHandler
      */
     public void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        Log.d("HTTPClient_CALL", "HTTP GET " + getAbsoluteUrl(url));
+        Log.d("HTTPClient", "HTTP GET " + getAbsoluteUrl(url));
         super.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
@@ -68,7 +68,7 @@ public final class HTTPClient extends AsyncHttpClient {
      * @param responseHandler
      */
     public void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        Log.d("HTTPClient_CALL", "HTTP POST " + getAbsoluteUrl(url));
+        Log.d("HTTPClient", "HTTP POST " + getAbsoluteUrl(url));
         super.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
@@ -80,7 +80,7 @@ public final class HTTPClient extends AsyncHttpClient {
      * @param responseHandler
      */
     public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        Log.d("HTTPClient_CALL", "HTTP PUT " + getAbsoluteUrl(url));
+        Log.d("HTTPClient", "HTTP PUT " + getAbsoluteUrl(url));
         super.put(getAbsoluteUrl(url), params, responseHandler);
     }
 
@@ -91,7 +91,7 @@ public final class HTTPClient extends AsyncHttpClient {
      * @param responseHandler
      */
     public void delete(String url, AsyncHttpResponseHandler responseHandler) {
-        Log.d("HTTPClient_CALL", "HTTP DELETE " + getAbsoluteUrl(url));
+        Log.d("HTTPClient", "HTTP DELETE " + getAbsoluteUrl(url));
        super.delete(getAbsoluteUrl(url), responseHandler);
     }
 

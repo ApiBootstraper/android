@@ -1,5 +1,7 @@
 package com.apibootstraper.mobile.core.util;
 
+import android.util.Log;
+
 public class HTTPResponse<T> {
 
     /**
@@ -31,7 +33,9 @@ public class HTTPResponse<T> {
      * Fired when a request fails to complete, override to handle in your own code
      * @param error the underlying cause of the failure
      */
-    public void onFailure(Throwable error) {}
+    public void onFailure(Throwable error) {
+        Log.e("HTTPResponse", error.getMessage());
+    }
 
     /**
      * Fired when a request fails to complete, override to handle in your own code
@@ -40,5 +44,6 @@ public class HTTPResponse<T> {
      */
     public void onFailure(Throwable error, String content) {
         onFailure(error);
+        Log.e("HTTPResponse", content);
     }
 }
