@@ -4,5 +4,6 @@
     <string name="app_name">ApiBootstraper</string>
     <string name="menu_settings">Settings</string>
     <string name="loading">Loading</string>
+    <string name="refresh">Refresh</string>
 
 </resources>
