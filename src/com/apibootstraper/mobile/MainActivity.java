@@ -1,5 +1,7 @@
 package com.apibootstraper.mobile;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.apibootstraper.mobile.core.Todo;
 import com.apibootstraper.mobile.core.User;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
 
@@ -25,9 +28,8 @@ public class MainActivity extends Activity
         application = (TodoApplication)getApplication();
 
         listView = (ListView)findViewById(R.id.todoListView);
-        String[] listeStrings = {"My first application","Update my application"};
-
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeStrings));
+        String[] list = {"No datas"};
+        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list));
 
         // Try to call WS
         application.showProgressDialog(this);
@@ -37,16 +39,10 @@ public class MainActivity extends Activity
             public void onSuccess(Boolean isAvailable) {
                 Log.d("WS_CALL", isAvailable ? "YES" : "NO");
             }
-            
-            @Override
-            public void onFailure(Throwable error, String content) {
-                Log.d("WS_CALL", error.getMessage());
-                Log.d("WS_CALL", content);
-            }
-            
+
             @Override
             public void onFinish() {
-                application.hideProgressDialog();
+                MainActivity.this.application.hideProgressDialog();
             }
         });
     }
@@ -57,6 +53,24 @@ public class MainActivity extends Activity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    
+    private void refreshTodos()
+    {
+        application.showProgressDialog(this);
+        Todo.findAll(new HTTPResponse<ArrayList<Todo>>() {
+
+            @Override
+            public void onSuccess(ArrayList<Todo> todos) {
+                
+                listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.todo_list_item, ));
+            }
+
+            @Override
+            public void onFinish() {
+                MainActivity.this.application.hideProgressDialog();
+            }
+        });
     }
 
 }
