@@ -7,6 +7,7 @@ import java.util.Date;
 import org.json.JSONArray;
 
 import com.apibootstraper.mobile.core.util.DateUtils;
+import com.apibootstraper.mobile.core.util.GsonHttpResponseHandler;
 import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -97,19 +98,19 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findAll(final HTTPResponse<ArrayList<Todo>> response) {
-        HTTPClient.getInstance().get("todo", null, new JsonHttpResponseHandler() {
+        HTTPClient.getInstance().get("todo", null, new GsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(JSONArray todos) {
+            public void onSuccess(String content) {
                 try {
-                    ArrayList<Todo> todoList = new ArrayList<Todo>();
+                    ArrayList<Todo> todos = new ArrayList<Todo>();
 
 //                    for (JSONObject t : todos) {
 //                        Todo todo = new Todo();
 //                        todoList.add(todo);
 //                    }
 
-                    response.onSuccess(todoList);
+                    response.onSuccess(todos);
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -128,10 +129,11 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findByUUID(String uuid, final HTTPResponse<Todo> response) {
-        HTTPClient.getInstance().get("todo/" + uuid, null, new JsonHttpResponseHandler() {
+
+        GsonHttpResponseHandler handler = new GsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(JSONArray timeline) {
+            public void onSuccess(String content) {
                 try {
                     Todo todo = new Todo();
 
@@ -140,6 +142,8 @@ public class Todo implements Serializable {
                     onFailure(e);
                 }
             }
-        });
+        };
+
+        HTTPClient.getInstance().get("todo/" + uuid, null, handler);
     }
 }
