@@ -80,7 +80,7 @@ public class User implements Serializable {
      */
     public static void findByUUID(String uuid, final HTTPResponse<User> response) {
 
-        onStart handler = new GsonHttpResponseHandler(response) {
+        GsonHttpResponseHandler handler = new GsonHttpResponseHandler(response) {
 
             @Override
             public void onSuccess(String content) {
@@ -109,7 +109,7 @@ public class User implements Serializable {
      */
     public static void userAvailability(String username, final HTTPResponse<Boolean> response) {
 
-        onStart handler = new GsonHttpResponseHandler(response) {
+        GsonHttpResponseHandler handler = new GsonHttpResponseHandler(response) {
 
             @Override
             public void onSuccess(String content) {
