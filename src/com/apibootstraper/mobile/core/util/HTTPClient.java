@@ -44,7 +44,6 @@ public final class HTTPClient extends AsyncHttpClient {
 
         addHeader("Accept", "application/json");
         
-        setTimeout(30);
     }
 
 

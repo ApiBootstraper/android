@@ -34,6 +34,7 @@ public class HTTPResponse<T> {
      * @param error the underlying cause of the failure
      */
     public void onFailure(Throwable error) {
+    	error.printStackTrace();
         Log.e("HTTPResponse", error.getMessage());
     }
 
