@@ -98,7 +98,7 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findAll(final HTTPResponse<ArrayList<Todo>> response) {
-        HTTPClient.getInstance().get("todo", null, new GsonHttpResponseHandler(response) {
+        HTTPClient.getInstance().get("todo/my", null, new GsonHttpResponseHandler<ArrayList<Todo>>(response) {
 
             @Override
             public void onSuccess(String content) {
@@ -130,7 +130,7 @@ public class Todo implements Serializable {
      */
     public static void findByUUID(String uuid, final HTTPResponse<Todo> response) {
 
-        GsonHttpResponseHandler handler = new GsonHttpResponseHandler(response) {
+        GsonHttpResponseHandler handler = new GsonHttpResponseHandler<Todo>(response) {
 
             @Override
             public void onSuccess(String content) {

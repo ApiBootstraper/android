@@ -3,13 +3,10 @@ package com.apibootstraper.mobile.core;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.json.JSONArray;
-
 import com.apibootstraper.mobile.core.util.DateUtils;
 import com.apibootstraper.mobile.core.util.GsonHttpResponseHandler;
 import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 public class User implements Serializable {
 
@@ -89,8 +86,6 @@ public class User implements Serializable {
 
                     response.onSuccess(user);
                 } catch(Exception e) {
-                    e.printStackTrace();
-
                     response.onFailure(e, null);
                 }
             }
@@ -114,12 +109,10 @@ public class User implements Serializable {
             @Override
             public void onSuccess(String content) {
                 try {
-                    boolean res = true;
+                    Boolean res = true;
 
                     response.onSuccess(res);
                 } catch(Exception e) {
-                    e.printStackTrace();
-
                     response.onFailure(e, null);
                 }
             }
