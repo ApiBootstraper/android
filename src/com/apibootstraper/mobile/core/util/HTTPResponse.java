@@ -1,5 +1,8 @@
 package com.apibootstraper.mobile.core.util;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.util.Log;
 
 public class HTTPResponse<T> {
@@ -31,20 +34,32 @@ public class HTTPResponse<T> {
 
     /**
      * Fired when a request fails to complete, override to handle in your own code
+     * 
      * @param error the underlying cause of the failure
      */
-    public void onFailure(Throwable error) {
-    	error.printStackTrace();
-        Log.e("HTTPResponse", error.getMessage());
+    public void onFailure(Throwable e) {
+    	e.printStackTrace();
+        Log.e("HTTPResponse", e.getMessage());
     }
 
     /**
      * Fired when a request fails to complete, override to handle in your own code
+     * 
      * @param error the underlying cause of the failure
      * @param content the response body, if any
      */
-    public void onFailure(Throwable error, String content) {
-        onFailure(error);
-        Log.e("HTTPResponse", content);
+    public void onFailure(Throwable e, JSONObject errorResponse) {
+        onFailure(e);
+        Log.e("HTTPResponse", errorResponse.toString());
+    }
+
+    /**
+     * 
+     * @param e
+     * @param errorResponse
+     */
+    public void onFailure(Throwable e, JSONArray errorResponse) {
+        onFailure(e);
+        Log.e("HTTPResponse", errorResponse.toString());
     }
 }
