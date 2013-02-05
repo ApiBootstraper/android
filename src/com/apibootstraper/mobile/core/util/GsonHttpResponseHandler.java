@@ -3,18 +3,23 @@
  */
 package com.apibootstraper.mobile.core.util;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * @author nicolas
  *
  */
-public class GsonHttpResponseHandler extends AsyncHttpResponseHandler {
+public class GsonHttpResponseHandler<T> extends AsyncHttpResponseHandler {
 
-    protected final HTTPResponse response;
+    protected final HTTPResponse<T> response;
+    
+    protected final Gson gson;
 
-    public GsonHttpResponseHandler(HTTPResponse response) {
+    public GsonHttpResponseHandler(HTTPResponse<T> response) {
         this.response = response;
+        this.gson = new Gson();
     }
 
     //
@@ -39,8 +44,9 @@ public class GsonHttpResponseHandler extends AsyncHttpResponseHandler {
      * Fired when a request returns successfully, override to handle in your own code
      * @param content the body of the HTTP response from the server
      */
-    public void onSuccess(String content) {
-        this.response.onSuccess(content);
+    public void onSuccess(String json) {
+    	T res = gson.fromJson(json, new TypeToken<T>(){}.getType());
+        this.response.onSuccess(res);
     }
 
     /**
@@ -48,8 +54,9 @@ public class GsonHttpResponseHandler extends AsyncHttpResponseHandler {
      * @param statusCode the status code of the response
      * @param content the body of the HTTP response from the server
      */
-    public void onSuccess(int statusCode, String content) {
-        this.response.onSuccess(statusCode, content);
+    public void onSuccess(int statusCode, String json) {
+    	T res = gson.fromJson(json, new TypeToken<T>(){}.getType());
+        this.response.onSuccess(statusCode, res);
     }
 
     /**
