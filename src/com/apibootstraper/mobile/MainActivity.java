@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.apibootstraper.mobile.core.Todo;
-import com.apibootstraper.mobile.core.User;
+import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
 
 public class MainActivity extends Activity
@@ -33,24 +32,12 @@ public class MainActivity extends Activity
         // Create an empty list for waiting
         String[] list = {"No datas"};
         listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list));
-        
+
+        // Temporary set credentials
+        HTTPClient.getInstance().setBasicAuth("user@example.com", "password");
+
         // Load the remote data
         refreshTodos();
-
-        // Try to call WS
-//        application.showProgressDialog(this);
-//        User.userAvailability("teste", new HTTPResponse<Boolean>() {
-//
-//            @Override
-//            public void onSuccess(Boolean isAvailable) {
-//                Log.d("WS_CALL", isAvailable ? "YES" : "NO");
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                MainActivity.this.application.hideProgressDialog();
-//            }
-//        });
     }
 
     @Override
