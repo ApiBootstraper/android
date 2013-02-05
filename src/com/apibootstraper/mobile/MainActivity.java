@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -64,9 +65,11 @@ public class MainActivity extends Activity
         Todo.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(ArrayList<Todo> todos) {
-                
-//                listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.todo_list_item, ));
+            public void onSuccess(int statusCode, ArrayList<Todo> todos) {
+                Log.d("HTTPResponse", todos.toString());
+                ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(MainActivity.this, android.R.layout.simple_list_item_1, todos);
+            
+                listView.setAdapter(adapter);
             }
 
             @Override
