@@ -1,16 +1,21 @@
 package com.apibootstraper.mobile.core;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONArray;
 
+import android.net.ParseException;
+
 import com.apibootstraper.mobile.core.util.DateUtils;
-import com.apibootstraper.mobile.core.util.GsonHttpResponseHandler;
 import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.apibootstraper.mobile.core.util.JsonHttpResponseHandler;
 
 public class Todo implements Serializable {
 
@@ -19,11 +24,32 @@ public class Todo implements Serializable {
 
     private String uuid;
 
+    private String name;
+
+    private String description;
+
     private Date createdAt;
 
     private Date updatedAt;
 
     private User user;
+
+    /**
+     * 
+     * @param t
+     * @throws JSONException 
+     * @throws java.text.ParseException 
+     * @throws java.text.ParseException 
+     */
+    protected void initFromJsonObject(JSONObject o) throws JSONException, java.text.ParseException {
+        this.uuid = o.getString("uuid");
+
+        this.name        = o.getString("name");
+//        this.description = o.getString("description");
+
+        this.createdAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("created_at"));
+        this.updatedAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("updated_at"));
+    }
 
     /**
      * @return id
@@ -39,6 +65,34 @@ public class Todo implements Serializable {
     public Todo setUUID(String uuid) {
         this.uuid = uuid;
         return this;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -98,19 +152,22 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findAll(final HTTPResponse<ArrayList<Todo>> response) {
-        HTTPClient.getInstance().get("todo/my", null, new GsonHttpResponseHandler<ArrayList<Todo>>(response) {
+        HTTPClient.getInstance().get("todo/my", null, new JsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(String content) {
+            public void onSuccess(JSONObject json) {
                 try {
                     ArrayList<Todo> todos = new ArrayList<Todo>();
 
-//                    for (JSONObject t : todos) {
-//                        Todo todo = new Todo();
-//                        todoList.add(todo);
-//                    }
+                    JSONArray array = json.getJSONObject("response").getJSONArray("todos");
+                    for(int i = 0 ; i < array.length(); i++){
+                        Todo todo = new Todo();
+                        todo.initFromJsonObject(array.getJSONObject(i));
+                        todos.add(todo);
+                    }
 
-                    response.onSuccess(todos);
+                    this.response.onSuccess(todos);
+                    this.response.onSuccess(0, todos);
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -130,12 +187,13 @@ public class Todo implements Serializable {
      */
     public static void findByUUID(String uuid, final HTTPResponse<Todo> response) {
 
-        GsonHttpResponseHandler handler = new GsonHttpResponseHandler<Todo>(response) {
+        JsonHttpResponseHandler handler = new JsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(String content) {
+            public void onSuccess(JSONObject json) {
                 try {
                     Todo todo = new Todo();
+                    todo.initFromJsonObject(json.getJSONObject("response").getJSONObject("todo"));
 
                     response.onSuccess(todo);
                 } catch(Exception e) {
