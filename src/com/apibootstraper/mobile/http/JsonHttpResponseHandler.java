@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.apibootstraper.mobile.core.util;
+package com.apibootstraper.mobile.http;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -80,6 +80,11 @@ public class JsonHttpResponseHandler extends com.loopj.android.http.JsonHttpResp
     @Override
     public void onSuccess(int statusCode, JSONArray response) {
         onSuccess(response);
+    }
+    
+    @Override
+    public void onFailure(Throwable e) {
+        this.response.onFailure(e);
     }
 
     @Override

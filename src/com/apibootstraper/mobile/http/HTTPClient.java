@@ -1,19 +1,15 @@
-package com.apibootstraper.mobile.core.util;
+package com.apibootstraper.mobile.http;
 
 import android.util.Log;
 
-import com.loopj.android.http.*;
+import com.apibootstraper.mobile.util.AppConfig;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public final class HTTPClient extends AsyncHttpClient {
 
-    private static final String API_BASE_URL = "http://nameless-forest-4117.herokuapp.com/";
-    private static final String API_VERSION  = "1.0.0";
-
-    private static final String APP_ID  = "OmDCHVNAOaWGJxSJ";
-    private static final String APP_KEY = "b4TrpLfwenHbJZlTjwWddwPwPJTMLZGF";
-
     private static volatile HTTPClient instance = null;
-
 
     /**
      * 
@@ -38,9 +34,9 @@ public final class HTTPClient extends AsyncHttpClient {
         super();
 
         // Default headers
-        addHeader("X-Api-Version", API_VERSION);
-        addHeader("X-APP-ID", APP_ID);
-        addHeader("X-APP-KEY", APP_KEY);
+        addHeader("X-Api-Version", AppConfig.HTTP_API_VERSION);
+        addHeader("X-APP-ID", AppConfig.HTTP_API_APP_ID);
+        addHeader("X-APP-KEY", AppConfig.HTTP_API_APP_KEY);
 
         addHeader("Accept", "application/json");
         addHeader("Content-Type", "application/json");
@@ -99,6 +95,6 @@ public final class HTTPClient extends AsyncHttpClient {
      * @return the absolute url
      */
     private String getAbsoluteUrl(String relativeUrl) {
-        return API_BASE_URL + relativeUrl;
+        return AppConfig.HTTP_API_BASE_URL + relativeUrl;
     }
 }

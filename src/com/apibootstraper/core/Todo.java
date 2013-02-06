@@ -10,10 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.apibootstraper.mobile.core.util.DateUtils;
-import com.apibootstraper.mobile.core.util.HTTPClient;
-import com.apibootstraper.mobile.core.util.HTTPResponse;
-import com.apibootstraper.mobile.core.util.JsonHttpResponseHandler;
+import com.apibootstraper.mobile.http.HTTPClient;
+import com.apibootstraper.mobile.http.HTTPResponse;
+import com.apibootstraper.mobile.http.JsonHttpResponseHandler;
+import com.apibootstraper.mobile.util.DateUtils;
 
 public class Todo implements Serializable {
 

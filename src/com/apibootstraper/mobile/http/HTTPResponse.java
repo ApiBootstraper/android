@@ -1,4 +1,4 @@
-package com.apibootstraper.mobile.core.util;
+package com.apibootstraper.mobile.http;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

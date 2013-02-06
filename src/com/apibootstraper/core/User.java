@@ -3,7 +3,7 @@ package com.apibootstraper.core;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.apibootstraper.mobile.core.util.DateUtils;
+import com.apibootstraper.mobile.util.DateUtils;
 
 public class User implements Serializable {
 

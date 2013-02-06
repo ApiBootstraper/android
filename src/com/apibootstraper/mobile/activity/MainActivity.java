@@ -1,4 +1,4 @@
-package com.apibootstraper.mobile;
+package com.apibootstraper.mobile.activity;
 
 import java.util.ArrayList;
 
@@ -9,10 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.apibootstraper.core.Todo;
-import com.apibootstraper.mobile.core.util.HTTPClient;
-import com.apibootstraper.mobile.core.util.HTTPResponse;
+import com.apibootstraper.mobile.R;
+import com.apibootstraper.mobile.TodoApplication;
+import com.apibootstraper.mobile.R.id;
+import com.apibootstraper.mobile.R.layout;
+import com.apibootstraper.mobile.R.menu;
+import com.apibootstraper.mobile.http.HTTPClient;
+import com.apibootstraper.mobile.http.HTTPResponse;
 
 public class MainActivity extends Activity
 {
@@ -70,6 +76,13 @@ public class MainActivity extends Activity
                 ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(MainActivity.this, android.R.layout.simple_list_item_1, todos);
             
                 listView.setAdapter(adapter);
+            }
+            
+            @Override
+            public void onFailure(Throwable e) {
+                Toast t = new Toast(MainActivity.this.getApplicationContext());
+                t.setText(R.string.loading_error);
+                t.show();
             }
 
             @Override

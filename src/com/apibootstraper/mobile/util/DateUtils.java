@@ -8,7 +8,7 @@
  *  Contributors:
  *    Kevin Sawicki (GitHub Inc.) - initial API and implementation
  *****************************************************************************/
-package com.apibootstraper.mobile.core.util;
+package com.apibootstraper.mobile.util;
 
 import java.util.Date;
 
