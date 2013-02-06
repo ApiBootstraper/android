@@ -37,18 +37,19 @@ public class Todo implements Serializable {
 
     /**
      * 
-     * @param t
+     * @param o
      * @throws JSONException 
      * @throws java.text.ParseException 
-     * @throws java.text.ParseException 
      */
-    protected void initFromJsonObject(JSONObject o) throws JSONException, java.text.ParseException {
+    public Todo(JSONObject o) throws JSONException, java.text.ParseException {
         this.uuid = o.getString("uuid");
 
         this.name        = o.has("name") ? o.getString("name") : null;
         this.description = o.has("description") ? o.getString("description") : null;
 
-        this.setAccomplished(o.has("is_accomplished") ? o.getBoolean("is_accomplished") : false);
+        this.isAccomplished = o.has("is_accomplished") ? o.getBoolean("is_accomplished") : false;
+        
+        this.user = o.has("user") ? new User(o.getJSONObject("user")) : null;
 
         this.createdAt = (Date) dateFormat.parse(o.getString("created_at"));
         this.updatedAt = (Date) dateFormat.parse(o.getString("updated_at"));
@@ -177,7 +178,7 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findAll(final HTTPResponse<ArrayList<Todo>> response) {
-        HTTPClient.getInstance().get("todo/my", null, new JsonHttpResponseHandler(response) {
+        HTTPClient.getInstance().get("todo/my", null, new JsonHttpResponseHandler<ArrayList<Todo>>(response) {
 
             @Override
             public void onSuccess(int statusCode, JSONObject json) {
@@ -186,8 +187,7 @@ public class Todo implements Serializable {
 
                     JSONArray array = json.getJSONObject("response").getJSONArray("todos");
                     for(int i = 0 ; i < array.length(); i++){
-                        Todo todo = new Todo();
-                        todo.initFromJsonObject(array.getJSONObject(i));
+                        Todo todo = new Todo(array.getJSONObject(i));
                         todos.add(todo);
                     }
 
@@ -210,23 +210,18 @@ public class Todo implements Serializable {
      * @param responseHandler
      */
     public static void findByUUID(String uuid, final HTTPResponse<Todo> response) {
-
-        JsonHttpResponseHandler handler = new JsonHttpResponseHandler(response) {
+        HTTPClient.getInstance().get(String.format("todo/%s", uuid), null, new JsonHttpResponseHandler<Todo>(response) {
 
             @Override
             public void onSuccess(JSONObject json) {
                 try {
-                    Todo todo = new Todo();
-                    todo.initFromJsonObject(json.getJSONObject("response").getJSONObject("todo"));
-
+                    Todo todo = new Todo(json.getJSONObject("response").getJSONObject("todo"));
                     response.onSuccess(todo);
 
                 } catch(Exception e) {
                     onFailure(e, json);
                 }
             }
-        };
-
-        HTTPClient.getInstance().get(String.format("todo/%s", uuid), null, handler);
+        });
     }
 }

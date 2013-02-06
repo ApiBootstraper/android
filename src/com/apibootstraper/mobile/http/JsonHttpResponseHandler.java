@@ -10,11 +10,11 @@ import org.json.JSONObject;
  * @author nicolas
  *
  */
-public class JsonHttpResponseHandler extends com.loopj.android.http.JsonHttpResponseHandler {
+public class JsonHttpResponseHandler<T> extends com.loopj.android.http.JsonHttpResponseHandler {
 
-    protected final HTTPResponse response;
+    protected final HTTPResponse<T> response;
 
-    public JsonHttpResponseHandler(HTTPResponse response) {
+    public JsonHttpResponseHandler(HTTPResponse<T> response) {
         this.response = response;
     }
 
