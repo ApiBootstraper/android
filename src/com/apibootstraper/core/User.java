@@ -3,9 +3,11 @@ package com.apibootstraper.core;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +15,7 @@ import com.apibootstraper.mobile.http.HTTPClient;
 import com.apibootstraper.mobile.http.HTTPResponse;
 import com.apibootstraper.mobile.http.JsonHttpResponseHandler;
 import com.apibootstraper.mobile.util.DateUtils;
+import com.loopj.android.http.RequestParams;
 
 public class User implements Serializable {
 
@@ -87,6 +90,41 @@ public class User implements Serializable {
         return this;
     }
 
+
+    /**
+     * Search a user
+     * 
+     * @apiRoute /user/search?q={query}
+     * 
+     * @param query
+     * @param responseHandler
+     */
+    public static void search(String query, final HTTPResponse<ArrayList<User>> response) {
+
+        RequestParams params = new RequestParams();
+        params.put("q", query);
+
+        HTTPClient.getInstance().get("user/my", params, new JsonHttpResponseHandler<ArrayList<User>>(response) {
+
+            @Override
+            public void onSuccess(int statusCode, JSONObject json) {
+                try {
+                    ArrayList<User> users = new ArrayList<User>();
+
+                    JSONArray array = json.getJSONObject("response").getJSONArray("users");
+                    for(int i = 0 ; i < array.length(); i++){
+                        User user = new User(array.getJSONObject(i));
+                        users.add(user);
+                    }
+
+                    response.onSuccess(statusCode, users);
+
+                } catch(Exception e) {
+                    onFailure(e, json);
+                }
+            }
+        });
+    }
 
     /**
      * Find a user by UUID
