@@ -1,6 +1,7 @@
 package com.apibootstraper.core;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -29,9 +30,9 @@ public class User implements Serializable {
      * 
      * @param o
      * @throws JSONException 
-     * @throws java.text.ParseException 
+     * @throws ParseException 
      */
-    public User(JSONObject o) throws JSONException, java.text.ParseException {
+    public User(JSONObject o) throws JSONException, ParseException {
         this.uuid = o.getString("uuid");
 
         this.createdAt = (Date) dateFormat.parse(o.getString("created_at"));

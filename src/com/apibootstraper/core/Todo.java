@@ -1,6 +1,7 @@
 package com.apibootstraper.core;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,9 +40,9 @@ public class Todo implements Serializable {
      * 
      * @param o
      * @throws JSONException 
-     * @throws java.text.ParseException 
+     * @throws ParseException 
      */
-    public Todo(JSONObject o) throws JSONException, java.text.ParseException {
+    public Todo(JSONObject o) throws JSONException, ParseException {
         this.uuid = o.getString("uuid");
 
         this.name        = o.has("name") ? o.getString("name") : null;
