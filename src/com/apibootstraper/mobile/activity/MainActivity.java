@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -69,17 +68,15 @@ public class MainActivity extends Activity
 
             @Override
             public void onSuccess(ArrayList<Todo> todos) {
-                Log.d("HTTPResponse", todos.toString());
                 ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(MainActivity.this, android.R.layout.simple_list_item_1, todos);
-            
+
                 listView.setAdapter(adapter);
             }
             
             @Override
             public void onFailure(Throwable e) {
-                Toast t = new Toast(MainActivity.this.getApplicationContext());
-                t.setText(R.string.loading_error);
-                t.show();
+                Toast toast = Toast.makeText(MainActivity.this.getApplicationContext(), R.string.loading_error, Toast.LENGTH_LONG);
+                toast.show();
             }
 
             @Override
