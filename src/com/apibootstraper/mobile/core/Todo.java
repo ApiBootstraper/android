@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONArray;
-
-import android.net.ParseException;
 
 import com.apibootstraper.mobile.core.util.DateUtils;
 import com.apibootstraper.mobile.core.util.HTTPClient;
@@ -44,8 +42,8 @@ public class Todo implements Serializable {
     protected void initFromJsonObject(JSONObject o) throws JSONException, java.text.ParseException {
         this.uuid = o.getString("uuid");
 
-        this.name        = o.getString("name");
-//        this.description = o.getString("description");
+        this.name        = o.has("name") ? o.getString("name") : null;
+        this.description = o.has("description") ? o.getString("description") : null;
 
         this.createdAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("created_at"));
         this.updatedAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("updated_at"));
@@ -143,6 +141,12 @@ public class Todo implements Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return String.format("<Todo uuid:%s name:%s description:%s createdAt:%s>", getUUID(), getName(), getDescription(), getCreatedAt());
+    }
+
+
     /**
      * Find all todo
      * 
@@ -155,7 +159,7 @@ public class Todo implements Serializable {
         HTTPClient.getInstance().get("todo/my", null, new JsonHttpResponseHandler(response) {
 
             @Override
-            public void onSuccess(JSONObject json) {
+            public void onSuccess(int statusCode, JSONObject json) {
                 try {
                     ArrayList<Todo> todos = new ArrayList<Todo>();
 
@@ -166,8 +170,7 @@ public class Todo implements Serializable {
                         todos.add(todo);
                     }
 
-                    this.response.onSuccess(todos);
-                    this.response.onSuccess(0, todos);
+                    this.response.onSuccess(statusCode, todos);
 
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -196,6 +199,7 @@ public class Todo implements Serializable {
                     todo.initFromJsonObject(json.getJSONObject("response").getJSONObject("todo"));
 
                     response.onSuccess(todo);
+
                 } catch(Exception e) {
                     onFailure(e);
                 }
