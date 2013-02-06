@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.apibootstraper.mobile.core.Todo;
+import com.apibootstraper.core.Todo;
 import com.apibootstraper.mobile.core.util.HTTPClient;
 import com.apibootstraper.mobile.core.util.HTTPResponse;
 
@@ -65,7 +65,7 @@ public class MainActivity extends Activity
         Todo.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(int statusCode, ArrayList<Todo> todos) {
+            public void onSuccess(ArrayList<Todo> todos) {
                 Log.d("HTTPResponse", todos.toString());
                 ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(MainActivity.this, android.R.layout.simple_list_item_1, todos);
             
