@@ -1,4 +1,4 @@
-package com.apibootstraper.mobile.core;
+package com.apibootstraper.core;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -19,12 +19,15 @@ public class Todo implements Serializable {
 
     /** serialVersionUID */
     private static final long serialVersionUID = -2851331358231023655L;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH);
 
     private String uuid;
 
     private String name;
 
     private String description;
+    
+    private boolean isAccomplished;
 
     private Date createdAt;
 
@@ -45,8 +48,10 @@ public class Todo implements Serializable {
         this.name        = o.has("name") ? o.getString("name") : null;
         this.description = o.has("description") ? o.getString("description") : null;
 
-        this.createdAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("created_at"));
-        this.updatedAt = (Date) new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH).parse(o.getString("updated_at"));
+        this.setAccomplished(o.has("is_accomplished") ? o.getBoolean("is_accomplished") : false);
+
+        this.createdAt = (Date) dateFormat.parse(o.getString("created_at"));
+        this.updatedAt = (Date) dateFormat.parse(o.getString("updated_at"));
     }
 
     /**
@@ -91,6 +96,20 @@ public class Todo implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the isAccomplished
+     */
+    public boolean isAccomplished() {
+        return isAccomplished;
+    }
+
+    /**
+     * @param isAccomplished the isAccomplished to set
+     */
+    public void setAccomplished(boolean isAccomplished) {
+        this.isAccomplished = isAccomplished;
     }
 
     /**
@@ -143,7 +162,9 @@ public class Todo implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("<Todo uuid:%s name:%s description:%s createdAt:%s>", getUUID(), getName(), getDescription(), getCreatedAt());
+        return String.format("<Todo %s uuid:\"%s\" name:\"%s\" description:\"%s\" isAccomplished:%s createdAt:\"%s\" updatedAt:\"%s\">",
+            hashCode(), getUUID(), getName(), getDescription(), isAccomplished(), getCreatedAt(), getUpdatedAt()
+        );
     }
 
 
@@ -170,11 +191,11 @@ public class Todo implements Serializable {
                         todos.add(todo);
                     }
 
-                    this.response.onSuccess(statusCode, todos);
+                    response.onSuccess(statusCode, todos);
 
                 } catch(Exception e) {
                     e.printStackTrace();
-                    onFailure(e);
+                    onFailure(e, json);
                 }
             }
         });
@@ -201,11 +222,11 @@ public class Todo implements Serializable {
                     response.onSuccess(todo);
 
                 } catch(Exception e) {
-                    onFailure(e);
+                    onFailure(e, json);
                 }
             }
         };
 
-        HTTPClient.getInstance().get("todo/" + uuid, null, handler);
+        HTTPClient.getInstance().get(String.format("todo/%s", uuid), null, handler);
     }
 }

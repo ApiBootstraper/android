@@ -1,4 +1,4 @@
-package com.apibootstraper.mobile.core;
+package com.apibootstraper.core;
 
 import java.io.Serializable;
 import java.util.Date;
