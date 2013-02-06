@@ -14,9 +14,6 @@ import android.widget.Toast;
 import com.apibootstraper.core.Todo;
 import com.apibootstraper.mobile.R;
 import com.apibootstraper.mobile.TodoApplication;
-import com.apibootstraper.mobile.R.id;
-import com.apibootstraper.mobile.R.layout;
-import com.apibootstraper.mobile.R.menu;
 import com.apibootstraper.mobile.http.HTTPClient;
 import com.apibootstraper.mobile.http.HTTPResponse;
 
