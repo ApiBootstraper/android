@@ -72,7 +72,7 @@ public class MainActivity extends Activity
 
                 listView.setAdapter(adapter);
             }
-            
+
             @Override
             public void onFailure(Throwable e) {
                 Toast toast = Toast.makeText(MainActivity.this.getApplicationContext(), R.string.loading_error, Toast.LENGTH_LONG);

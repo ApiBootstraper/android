@@ -195,7 +195,6 @@ public class Todo implements Serializable {
                     response.onSuccess(statusCode, todos);
 
                 } catch(Exception e) {
-                    e.printStackTrace();
                     onFailure(e, json);
                 }
             }

@@ -3,8 +3,6 @@ package com.apibootstraper.mobile.http;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 public class HTTPResponse<T> {
 
     /**
@@ -36,11 +34,9 @@ public class HTTPResponse<T> {
      * Fired when a request fails to complete, override to handle in your own code
      * 
      * @param error the underlying cause of the failure
+     * @deprecated use {@link #onFailure(Throwable, JSONObject)} or {@link #onFailure(Throwable, JSONArray)}
      */
-    public void onFailure(Throwable e) {
-    	e.printStackTrace();
-        Log.e("HTTPResponse", e.getMessage());
-    }
+    public void onFailure(Throwable e) {}
 
     /**
      * Fired when a request fails to complete, override to handle in your own code
@@ -48,9 +44,10 @@ public class HTTPResponse<T> {
      * @param error the underlying cause of the failure
      * @param content the response body, if any
      */
+    @SuppressWarnings("deprecation")
     public void onFailure(Throwable e, JSONObject errorResponse) {
+        // By default, call the deprecated onFailure(Throwable) for compatibility
         onFailure(e);
-        Log.e("HTTPResponse", errorResponse.toString());
     }
 
     /**
@@ -58,8 +55,9 @@ public class HTTPResponse<T> {
      * @param e
      * @param errorResponse
      */
+    @SuppressWarnings("deprecation")
     public void onFailure(Throwable e, JSONArray errorResponse) {
+        // By default, call the deprecated onFailure(Throwable) for compatibility
         onFailure(e);
-        Log.e("HTTPResponse", errorResponse.toString());
     }
 }
