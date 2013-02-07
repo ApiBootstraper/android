@@ -17,9 +17,23 @@ public class HTTPResponse<T> {
 
     /**
      * 
-     * @param response
+     * @param object
      */
     public void onSuccess(T object) {}
+
+    /**
+     * 
+     * @param object
+     * @param response
+     */
+    public void onSuccess(T object, JSONObject response) {}
+
+    /**
+     * 
+     * @param object
+     * @param response
+     */
+    public void onSuccess(T object, JSONArray response) {}
 
     /**
      * 
@@ -28,6 +42,26 @@ public class HTTPResponse<T> {
      */
     public void onSuccess(int statusCode, T object) {
         onSuccess(object);
+    }
+
+    /**
+     * 
+     * @param statusCode
+     * @param object
+     * @param response
+     */
+    public void onSuccess(int statusCode, T object, JSONObject response) {
+        onSuccess(object, response);
+    }
+
+    /**
+     * 
+     * @param statusCode
+     * @param object
+     * @param response
+     */
+    public void onSuccess(int statusCode, T object, JSONArray response) {
+        onSuccess(object, response);
     }
 
     /**

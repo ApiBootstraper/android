@@ -68,7 +68,8 @@ public class MainActivity extends Activity
         Todo.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(ArrayList<Todo> todos) {
+            public void onSuccess(ArrayList<Todo> todos, JSONObject json) {
+                int total_todos = json.getInt('total');
                 listView.setAdapter(new TodoArrayAdapter(MainActivity.this, todos));
             }
 

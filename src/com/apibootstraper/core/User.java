@@ -117,7 +117,7 @@ public class User implements Serializable {
                         users.add(user);
                     }
 
-                    response.onSuccess(statusCode, users);
+                    response.onSuccess(statusCode, users, json);
 
                 } catch(Exception e) {
                     onFailure(e, json);
