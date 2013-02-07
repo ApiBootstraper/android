@@ -200,7 +200,7 @@ public class Todo implements Serializable {
                         todos.add(todo);
                     }
 
-                    response.onSuccess(statusCode, todos);
+                    response.onSuccess(statusCode, todos, json);
 
                 } catch(Exception e) {
                     onFailure(e, json);
