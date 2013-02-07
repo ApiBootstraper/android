@@ -15,6 +15,7 @@ import com.apibootstraper.mobile.R;
 import com.apibootstraper.mobile.TodoApplication;
 import com.apibootstraper.mobile.http.HTTPClient;
 import com.apibootstraper.mobile.http.HTTPResponse;
+import com.apibootstraper.mobile.view.TodoArrayAdapter;
 
 public class MainActivity extends Activity
 {
@@ -68,9 +69,7 @@ public class MainActivity extends Activity
 
             @Override
             public void onSuccess(ArrayList<Todo> todos) {
-                ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(MainActivity.this, android.R.layout.simple_list_item_1, todos);
-
-                listView.setAdapter(adapter);
+                listView.setAdapter(new TodoArrayAdapter(MainActivity.this, todos));
             }
 
             @Override
