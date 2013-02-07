@@ -42,6 +42,10 @@ public class User implements Serializable {
         this.updatedAt = (Date) dateFormat.parse(o.getString("updated_at"));
     }
 
+    //
+    // Getters & setters
+    //
+
     /**
      * @return id
      */
@@ -90,6 +94,10 @@ public class User implements Serializable {
         return this;
     }
 
+
+    //
+    // Method to call webservices
+    //
 
     /**
      * Search a user

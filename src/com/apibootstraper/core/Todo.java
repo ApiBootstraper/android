@@ -56,6 +56,10 @@ public class Todo implements Serializable {
         this.updatedAt = (Date) dateFormat.parse(o.getString("updated_at"));
     }
 
+    //
+    // Getters & setters
+    //
+
     /**
      * @return id
      */
@@ -169,6 +173,10 @@ public class Todo implements Serializable {
         );
     }
 
+
+    //
+    // Method to call webservices
+    //
 
     /**
      * Find all todo
