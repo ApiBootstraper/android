@@ -15,6 +15,7 @@ import com.apibootstraper.mobile.R;
 import com.apibootstraper.mobile.TodoApplication;
 import com.apibootstraper.mobile.http.HTTPClient;
 import com.apibootstraper.mobile.http.HTTPResponse;
+import com.apibootstraper.mobile.repository.TodoRepository;
 import com.apibootstraper.mobile.view.TodoArrayAdapter;
 
 public class MainActivity extends Activity
@@ -65,11 +66,10 @@ public class MainActivity extends Activity
     private void refreshTodos()
     {
         application.showProgressDialog(this);
-        Todo.findAll(new HTTPResponse<ArrayList<Todo>>() {
+        TodoRepository.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(ArrayList<Todo> todos, JSONObject json) {
-                int total_todos = json.getInt('total');
+            public void onSuccess(ArrayList<Todo> todos, int total) {
                 listView.setAdapter(new TodoArrayAdapter(MainActivity.this, todos));
             }
 
