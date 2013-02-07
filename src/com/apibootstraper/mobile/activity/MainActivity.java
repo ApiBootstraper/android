@@ -62,14 +62,14 @@ public class MainActivity extends Activity
 
         return super.onOptionsItemSelected(item);
     }
-    
+
     private void refreshTodos()
     {
         application.showProgressDialog(this);
         TodoRepository.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(ArrayList<Todo> todos, int total) {
+            public void onSuccess(ArrayList<Todo> todos) {
                 listView.setAdapter(new TodoArrayAdapter(MainActivity.this, todos));
             }
 
