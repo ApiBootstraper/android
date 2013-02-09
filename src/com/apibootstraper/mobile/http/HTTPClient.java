@@ -40,6 +40,9 @@ public final class HTTPClient extends AsyncHttpClient {
 
         addHeader("Accept", "application/json");
         addHeader("Content-Type", "application/json");
+
+        // Set timeout to 30 seconds
+        setTimeout(30000);
     }
 
 

@@ -41,7 +41,7 @@ public class UserRepository {
                     ArrayList<User> users = new ArrayList<User>();
 
                     JSONArray array = json.getJSONObject("response").getJSONArray("users");
-                    for(int i = 0 ; i < array.length(); i++){
+                    for(int i = 0 ; i < array.length(); i++) {
                         User user = new User(array.getJSONObject(i));
                         users.add(user);
                     }

@@ -36,7 +36,7 @@ public class TodoRepository {
                     ArrayList<Todo> todos = new ArrayList<Todo>();
 
                     JSONArray array = json.getJSONObject("response").getJSONArray("todos");
-                    for(int i = 0 ; i < array.length(); i++){
+                    for(int i = 0 ; i < array.length(); i++) {
                         Todo todo = new Todo(array.getJSONObject(i));
                         todos.add(todo);
                     }
