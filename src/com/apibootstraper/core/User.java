@@ -11,13 +11,17 @@ import org.json.JSONObject;
 
 import com.apibootstraper.mobile.util.DateUtils;
 
-public class User implements Serializable {
+public class User implements Entity, Serializable {
 
     /** serialVersionUID */
     private static final long serialVersionUID = -4670218264175191002L;
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.ENGLISH);
 
     private String uuid;
+    
+    private String username;
+    
+    private String email;
 
     private Date createdAt;
 
@@ -32,6 +36,9 @@ public class User implements Serializable {
     public User(JSONObject o) throws JSONException, ParseException {
         this.uuid = o.getString("uuid");
 
+        this.username = o.getString("username");
+        this.email    = o.getString("email");
+
         this.createdAt = (Date) dateFormat.parse(o.getString("created_at"));
         this.updatedAt = (Date) dateFormat.parse(o.getString("updated_at"));
     }
@@ -44,11 +51,34 @@ public class User implements Serializable {
     }
 
     /**
-     * @param id
-     * @return this user
+     * @return the username
      */
-    public User setUUID(String uuid) {
-        this.uuid = uuid;
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * @param username the username to set
+     * @return this User
+     */
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     * @return this User
+     */
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 

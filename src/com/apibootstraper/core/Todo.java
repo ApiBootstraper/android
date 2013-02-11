@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.apibootstraper.mobile.util.DateUtils;
 
-public class Todo implements Serializable {
+public class Todo implements Entity, Serializable {
 
     /** serialVersionUID */
     private static final long serialVersionUID = -2851331358231023655L;
@@ -59,15 +59,6 @@ public class Todo implements Serializable {
     }
 
     /**
-     * @param id
-     * @return this todo
-     */
-    public Todo setUUID(String uuid) {
-        this.uuid = uuid;
-        return this;
-    }
-
-    /**
      * @return the name
      */
     public String getName() {
@@ -76,9 +67,11 @@ public class Todo implements Serializable {
 
     /**
      * @param name the name to set
+     * @return this todo
      */
-    public void setName(String name) {
+    public Todo setName(String name) {
         this.name = name;
+        return this;
     }
 
     /**
@@ -90,9 +83,11 @@ public class Todo implements Serializable {
 
     /**
      * @param description the description to set
+     * @return this todo
      */
-    public void setDescription(String description) {
+    public Todo setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     /**
@@ -104,9 +99,11 @@ public class Todo implements Serializable {
 
     /**
      * @param isAccomplished the isAccomplished to set
+     * @return this todo
      */
-    public void setAccomplished(boolean isAccomplished) {
+    public Todo setAccomplished(boolean isAccomplished) {
         this.isAccomplished = isAccomplished;
+        return this;
     }
 
     /**
