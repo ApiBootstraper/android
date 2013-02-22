@@ -38,6 +38,7 @@ public final class HTTPClient extends AsyncHttpClient {
         addHeader("X-APP-ID", AppConfig.HTTP_API_APP_ID);
         addHeader("X-APP-KEY", AppConfig.HTTP_API_APP_KEY);
 
+        // Format headers
         addHeader("Accept", "application/json");
         addHeader("Content-Type", "application/json");
 
@@ -80,6 +81,18 @@ public final class HTTPClient extends AsyncHttpClient {
     public void put(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         Log.d("HTTPClient", "HTTP PUT " + getAbsoluteUrl(url));
         super.put(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    /**
+     * Call a REST PATCH webservice
+     * 
+     * @param url
+     * @param params
+     * @param responseHandler
+     */
+    public void patch(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        Log.d("HTTPClient", "HTTP PATCH " + getAbsoluteUrl(url));
+//        super.patch(getAbsoluteUrl(url), params, responseHandler);
     }
 
     /**
