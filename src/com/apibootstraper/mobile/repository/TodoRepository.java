@@ -22,7 +22,7 @@ public class TodoRepository {
     /**
      * Find all todo
      * 
-     * @apiRoute /todo
+     * @apiRoute /todo/my
      * 
      * @param uuid
      * @param responseHandler
