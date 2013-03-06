@@ -23,7 +23,7 @@ public class UserRepository {
     /**
      * Search a user
      * 
-     * @apiRoute /user/search?q={query}
+     * @apiRoute /users/search?q={query}
      * 
      * @param query
      * @param responseHandler
@@ -33,7 +33,7 @@ public class UserRepository {
         RequestParams params = new RequestParams();
         params.put("q", query);
 
-        HTTPClient.getInstance().get("user/my", params, new JsonHttpResponseHandler<ArrayList<User>>(response) {
+        HTTPClient.getInstance().get("users/my", params, new JsonHttpResponseHandler<ArrayList<User>>(response) {
 
             @Override
             public void onSuccess(int statusCode, JSONObject json) {
@@ -58,13 +58,13 @@ public class UserRepository {
     /**
      * Find a user by UUID
      * 
-     * @apiRoute /user/{uuid}
+     * @apiRoute /users/{uuid}
      * 
      * @param uuid
      * @param responseHandler
      */
     public static void findByUUID(String uuid, final HTTPResponse<User> response) {
-        HTTPClient.getInstance().get(String.format("user/%s", uuid), null, new JsonHttpResponseHandler<User>(response) {
+        HTTPClient.getInstance().get(String.format("users/%s", uuid), null, new JsonHttpResponseHandler<User>(response) {
 
             @Override
             public void onSuccess(JSONObject json) {

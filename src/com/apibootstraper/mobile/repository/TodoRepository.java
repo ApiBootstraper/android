@@ -22,13 +22,13 @@ public class TodoRepository {
     /**
      * Find all todo
      * 
-     * @apiRoute /todo/my
+     * @apiRoute /todos/my
      * 
      * @param uuid
      * @param responseHandler
      */
     public static void findAll(final HTTPResponse<ArrayList<Todo>> response) {
-        HTTPClient.getInstance().get("todo/my", null, new JsonHttpResponseHandler<ArrayList<Todo>>(response) {
+        HTTPClient.getInstance().get("todos/my", null, new JsonHttpResponseHandler<ArrayList<Todo>>(response) {
 
             @Override
             public void onSuccess(int statusCode, JSONObject json) {
@@ -53,13 +53,13 @@ public class TodoRepository {
     /**
      * Find a todo by UUID
      * 
-     * @apiRoute /todo/{uuid}
+     * @apiRoute /todos/{uuid}
      * 
      * @param uuid
      * @param responseHandler
      */
     public static void findByUUID(String uuid, final HTTPResponse<Todo> response) {
-        HTTPClient.getInstance().get(String.format("todo/%s", uuid), null, new JsonHttpResponseHandler<Todo>(response) {
+        HTTPClient.getInstance().get(String.format("todos/%s", uuid), null, new JsonHttpResponseHandler<Todo>(response) {
 
             @Override
             public void onSuccess(JSONObject json) {
