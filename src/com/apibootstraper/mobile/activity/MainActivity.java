@@ -3,9 +3,14 @@ package com.apibootstraper.mobile.activity;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,16 +28,33 @@ public class MainActivity extends Activity
     private TodoApplication application;
 
     private ListView listView;
+    
+    private ArrayList<Todo> todos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         application = (TodoApplication)getApplication();
 
         listView = (ListView)findViewById(R.id.todoListView);
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int pos, long id)
+            {
+                if (todos.size() < id) {
+                    return;
+                }
+
+                Log.d("toto_uuid", todos.get(pos).getUUID());
+                Intent intent = new Intent(MainActivity.this, TodoActivity.class);
+                intent.putExtra("todo_uuid", todos.get(pos).getUUID());
+                startActivity(intent);
+            }
+        });
 
         // Create an empty list for waiting
         String[] list = {"No datas"};
@@ -54,8 +76,8 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         if (item.getItemId() == R.id.refresh) {
             refreshTodos();
         }
@@ -69,12 +91,15 @@ public class MainActivity extends Activity
         TodoRepository.findAll(new HTTPResponse<ArrayList<Todo>>() {
 
             @Override
-            public void onSuccess(ArrayList<Todo> todos) {
+            public void onSuccess(ArrayList<Todo> todos)
+            {
+                MainActivity.this.todos = todos;
                 listView.setAdapter(new TodoArrayAdapter(MainActivity.this, todos));
             }
 
             @Override
-            public void onFailure(Throwable e) {
+            public void onFailure(Throwable e)
+            {
                 Toast toast = Toast.makeText(MainActivity.this.getApplicationContext(), R.string.loading_error, Toast.LENGTH_LONG);
                 toast.show();
             }
@@ -85,5 +110,4 @@ public class MainActivity extends Activity
             }
         });
     }
-
 }

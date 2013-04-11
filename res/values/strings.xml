@@ -6,5 +6,7 @@
     <string name="loading">Loading</string>
     <string name="refresh">Refresh</string>
     <string name="loading_error">There was an error during loading&#8230;</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_todo">TodoActivity</string>
 
 </resources>
