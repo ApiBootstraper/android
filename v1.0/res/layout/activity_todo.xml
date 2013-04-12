@@ -5,13 +5,29 @@
     tools:context=".TodoActivity" >
 
     <TextView
-        android:id="@+id/todoViewTodoName"
+        android:id="@+id/todo_view_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="62dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/hello_world" />
+
+    <TextView
+        android:id="@+id/todo_view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:text="@string/hello_world" />
+        android:layout_marginTop="16dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:text="@string/hello_world"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
