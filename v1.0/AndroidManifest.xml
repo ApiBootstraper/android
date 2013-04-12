@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.apibootstraper.mobile.activity.MainActivity" />
         </activity>
+        <activity
+            android:name="com.apibootstraper.mobile.activity.TodoFormActivity"
+            android:label="@string/title_activity_todo_form"
+            android:parentActivityName="com.apibootstraper.mobile.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.apibootstraper.mobile.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

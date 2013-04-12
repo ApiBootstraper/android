@@ -81,6 +81,9 @@ public class MainActivity extends Activity
         if (item.getItemId() == R.id.menu_refresh) {
             refreshTodos();
         }
+        else if (item.getItemId() == R.id.menu_add_todo) {
+            startActivity(new Intent(MainActivity.this.getApplicationContext(), TodoFormActivity.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }
