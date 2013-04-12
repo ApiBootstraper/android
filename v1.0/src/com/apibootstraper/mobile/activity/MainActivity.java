@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,9 +48,10 @@ public class MainActivity extends Activity
                     return;
                 }
 
-                Log.d("toto_uuid", todos.get(pos).getUUID());
-                Intent intent = new Intent(MainActivity.this, TodoActivity.class);
-                intent.putExtra("todo_uuid", todos.get(pos).getUUID());
+                Intent intent   = new Intent(MainActivity.this, TodoActivity.class);
+                Bundle b        = new Bundle();
+                b.putSerializable("todo", todos.get(pos));
+                intent.putExtra("bundle", b);
                 startActivity(intent);
             }
         });
@@ -78,7 +78,7 @@ public class MainActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId() == R.id.refresh) {
+        if (item.getItemId() == R.id.menu_refresh) {
             refreshTodos();
         }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +19,10 @@ import com.apibootstraper.mobile.repository.TodoRepository;
 public class TodoActivity extends Activity
 {
     private TodoApplication application;
-    
-    private TextView todoViewTodoName;
-    
+
+    private TextView todoViewName;
+    private TextView todoViewDescription;
+
     private Todo todo;
 
     @Override
@@ -33,10 +35,22 @@ public class TodoActivity extends Activity
 
         application = (TodoApplication)getApplication();
         
-        todoViewTodoName = (TextView)findViewById(R.id.todoViewTodoName);
-        
-        Intent intent = getIntent();
-        loadTodo(intent.getStringExtra("todo_uuid"));
+        todoViewName        = (TextView)findViewById(R.id.todo_view_name);
+        todoViewDescription = (TextView)findViewById(R.id.todo_view_description);
+
+        Intent intent   = this.getIntent();
+        Bundle b        = intent.getBundleExtra("bundle");
+        Object obj      = b != null ? b.getSerializable("todo") : null;
+
+        if (obj != null && obj instanceof Todo)
+        {
+            todo = (Todo)obj;
+            refreshView();
+            loadTodo(todo.getUUID());
+        }
+        else {
+            // TODO: return message because there are no todo specified 
+        }
     }
 
     @Override
@@ -68,7 +82,8 @@ public class TodoActivity extends Activity
     
     private void refreshView()
     {
-        todoViewTodoName.setText(todo.getName());
+        todoViewName.setText(todo.getName());
+        todoViewDescription.setText(todo.getDescription());
     }
 
     private void loadTodo(String uuid)
