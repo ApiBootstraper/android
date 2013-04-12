@@ -1,7 +1,5 @@
 package com.apibootstraper.mobile.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import com.apibootstraper.mobile.R;
 import com.apibootstraper.mobile.TodoApplication;
 import com.apibootstraper.mobile.http.HTTPResponse;
 import com.apibootstraper.mobile.repository.TodoRepository;
-import com.apibootstraper.mobile.view.TodoArrayAdapter;
 
 public class TodoActivity extends Activity
 {
